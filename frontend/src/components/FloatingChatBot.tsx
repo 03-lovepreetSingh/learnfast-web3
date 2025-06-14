@@ -145,7 +145,7 @@ export default function ScheduleChatBot({ schedule }: ChatBotProps) {
 
     setIsLoading(true);
     try {
-      const response = await fetch('https://python-backend-9i5a.onrender.com/api/chat', {
+      const response = await fetch('http://127.0.0.1:5000/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

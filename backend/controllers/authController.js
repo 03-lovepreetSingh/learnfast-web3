@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 exports.signup = async (req, res) => {
     try {
-        const { fullName, email, password } = req.body;
+        const { fullName, email, password, primaryMetaMaskAddress } = req.body;
 
         // Check if user already exists
         let user = await User.findOne({ email });
@@ -19,7 +19,8 @@ exports.signup = async (req, res) => {
         user = new User({
             fullName,
             email,
-            password
+            password,
+            primaryMetaMaskAddress,
         });
 
         // Hash password
@@ -40,7 +41,8 @@ exports.signup = async (req, res) => {
             user: {
                 _id: user._id,
                 fullName: user.fullName,
-                email: user.email
+                email: user.email,
+                primaryMetaMaskAddress:user.primaryMetaMaskAddress,
             }
         });
     } catch (err) {

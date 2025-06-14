@@ -88,7 +88,7 @@ export default function MySchedules() {
           return;
         }
 
-        const response = await fetch(`https://python-backend-9i5a.onrender.com/api/schedules/${user._id}`, {
+        const response = await fetch(`http://127.0.0.1:5000/api/schedules/${user._id}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -158,7 +158,7 @@ export default function MySchedules() {
   const handleDeleteSchedule = async (scheduleId: string) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://python-backend-9i5a.onrender.com/api/schedules/${scheduleId}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/schedules/${scheduleId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -198,7 +198,7 @@ export default function MySchedules() {
     setIsRefreshing(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://python-backend-9i5a.onrender.com/api/schedules/${user?._id}`, {
+      const response = await fetch(`http://127.0.0.1:5000/api/schedules/${user?._id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

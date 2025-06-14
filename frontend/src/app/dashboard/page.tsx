@@ -87,7 +87,7 @@ export default function Dashboard() {
         ...(scheduleType === 'daily' ? { dailyHours } : { targetDays })
       };
 
-      const response = await fetch('https://python-backend-9i5a.onrender.com/api/schedule', {
+      const response = await fetch('http://127.0.0.1:5000/api/schedule', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
