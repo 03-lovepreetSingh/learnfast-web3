@@ -89,12 +89,12 @@ export default function MySchedules() {
         }
 
         const response = await fetch(
-          `http://127.0.0.1:5000/api/schedules/${user._id}`,
+          `https://learnfast-backend.onrender.com/api/schedules/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          },
+          }
         );
 
         if (!response.ok) {
@@ -151,7 +151,7 @@ export default function MySchedules() {
               schedule.schedule_data?.reduce(
                 (acc, day) =>
                   acc + day.videos.filter((v) => v.completed).length,
-                0,
+                0
               ) || 0;
             const totalVideos = schedule.summary.totalVideos;
             return completedVideos / totalVideos;
@@ -172,13 +172,13 @@ export default function MySchedules() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://127.0.0.1:5000/api/schedules/${scheduleId}`,
+        `https://learnfast-backend.onrender.com/api/schedules/${scheduleId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
 
       if (!response.ok) {
@@ -186,7 +186,7 @@ export default function MySchedules() {
       }
 
       setSchedules((prev) =>
-        prev.filter((schedule) => schedule._id !== scheduleId),
+        prev.filter((schedule) => schedule._id !== scheduleId)
       );
       setIsDeleteModalOpen(false);
       setScheduleToDelete(null);
@@ -207,7 +207,7 @@ export default function MySchedules() {
     if (!schedule.schedule_data) return 0;
     const completedVideos = schedule.schedule_data.reduce(
       (acc, day) => acc + day.videos.filter((v) => v.completed).length,
-      0,
+      0
     );
     return (completedVideos / schedule.summary.totalVideos) * 100;
   };
@@ -217,12 +217,12 @@ export default function MySchedules() {
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(
-        `http://127.0.0.1:5000/api/schedules/${user?._id}`,
+        `https://learnfast-backend.onrender.com/api/schedules/${user?._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
 
       if (!response.ok) throw new Error("Failed to refresh schedules");
@@ -273,7 +273,9 @@ export default function MySchedules() {
               </button>
               <button
                 onClick={refreshSchedules}
-                className={`p-2 hover:bg-gray-700/50 rounded-full ${isRefreshing ? "animate-spin" : ""}`}
+                className={`p-2 hover:bg-gray-700/50 rounded-full ${
+                  isRefreshing ? "animate-spin" : ""
+                }`}
                 title="Refresh"
                 disabled={isRefreshing}
               >
@@ -406,14 +408,18 @@ export default function MySchedules() {
               <div className="flex items-center bg-gray-800/30 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded ${viewMode === "grid" ? "bg-indigo-500 text-white" : ""}`}
+                  className={`p-2 rounded ${
+                    viewMode === "grid" ? "bg-indigo-500 text-white" : ""
+                  }`}
                   title="Grid View"
                 >
                   <Icons.LayoutGrid size={20} />
                 </button>
                 <button
                   onClick={() => setViewMode("list")}
-                  className={`p-2 rounded ${viewMode === "list" ? "bg-indigo-500 text-white" : ""}`}
+                  className={`p-2 rounded ${
+                    viewMode === "list" ? "bg-indigo-500 text-white" : ""
+                  }`}
                   title="List View"
                 >
                   <Icons.List size={20} />

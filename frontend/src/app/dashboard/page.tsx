@@ -71,7 +71,7 @@ export default function Dashboard() {
 
   // Deposit related states
   const [depositAmount, setDepositAmount] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
+  const [username, setUsername] = useState<string>(user?.email || "");
   const [isDepositing, setIsDepositing] = useState(false);
 
   // Wagmi hooks for contract interaction
@@ -142,6 +142,7 @@ export default function Dashboard() {
   };
 
   const createSchedule = async (e: React.FormEvent) => {
+    handleDeposit();
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -161,14 +162,17 @@ export default function Dashboard() {
         ...(scheduleType === "daily" ? { dailyHours } : { targetDays }),
       };
 
-      const response = await fetch("http://127.0.0.1:5000/api/schedule", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(scheduleData),
-      });
+      const response = await fetch(
+        "https://learnfast-backend.onrender.com/api/schedule",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(scheduleData),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
@@ -239,102 +243,6 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold mb-6">
             Create New Learning Schedule
           </h1>
-
-          {/* Deposit Section */}
-          <div
-            className={`mb-8 p-6 rounded-xl ${
-              isDarkMode ? "bg-gray-900/50" : "bg-white/70"
-            }`}
-          >
-            <h2 className="text-lg font-semibold mb-4 flex items-center">
-              <Icons.Wallet className="mr-2 text-indigo-500" size={20} />
-              Deposit Reward
-            </h2>
-
-            {userBalance !== undefined && (
-              <div className="mb-4 p-3 bg-indigo-500/10 rounded-lg">
-                <span className="text-sm text-indigo-400">
-                  Current Balance:{" "}
-                </span>
-                <span className="font-medium">
-                  {formatEther(userBalance as bigint)} ETH
-                </span>
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-              <div>
-                <label className="block mb-2 text-sm font-medium">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter username"
-                  className={`w-full p-3 rounded-lg ${
-                    isDarkMode
-                      ? "bg-gray-800/50 border-gray-700"
-                      : "bg-white border-gray-300"
-                  } border`}
-                />
-              </div>
-              <div>
-                <label className="block mb-2 text-sm font-medium">
-                  Amount (ETH)
-                </label>
-                <input
-                  type="number"
-                  value={depositAmount}
-                  onChange={(e) => setDepositAmount(e.target.value)}
-                  placeholder="0.01"
-                  step="0.01"
-                  min="0"
-                  className={`w-full p-3 rounded-lg ${
-                    isDarkMode
-                      ? "bg-gray-800/50 border-gray-700"
-                      : "bg-white border-gray-300"
-                  } border`}
-                />
-              </div>
-            </div>
-
-            <button
-              onClick={handleDeposit}
-              disabled={isPending || isConfirming}
-              className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
-            >
-              {isPending ? (
-                <div className="flex items-center justify-center">
-                  <Icons.Loader2 className="animate-spin mr-2" size={20} />
-                  <span>Confirming...</span>
-                </div>
-              ) : isConfirming ? (
-                <div className="flex items-center justify-center">
-                  <Icons.Loader2 className="animate-spin mr-2" size={20} />
-                  <span>Waiting for confirmation...</span>
-                </div>
-              ) : (
-                "Deposit ETH"
-              )}
-            </button>
-
-            {hash && (
-              <div className="mt-4 p-3 bg-blue-500/10 rounded-lg">
-                <span className="text-sm text-blue-400">
-                  Transaction Hash:{" "}
-                </span>
-                <span className="font-mono text-xs break-all">{hash}</span>
-              </div>
-            )}
-
-            {isConfirmed && (
-              <div className="mt-4 p-3 bg-green-500/10 rounded-lg text-green-400">
-                <Icons.CheckCircle className="inline-block mr-2" size={16} />
-                Deposit successful!
-              </div>
-            )}
-          </div>
 
           {error && (
             <div className="mb-4 p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500">
@@ -482,6 +390,65 @@ export default function Dashboard() {
               <p className="mt-2 text-sm text-gray-500">
                 Set the reward amount you'll receive upon completion
               </p>
+            </div>
+            {/* Deposit Section */}
+            <div
+              className={`mb-8 p-6 rounded-xl ${
+                isDarkMode ? "bg-gray-900/50" : "bg-white/70"
+              }`}
+            >
+              <h2 className="text-lg font-semibold mb-4 flex items-center">
+                <Icons.Wallet className="mr-2 text-indigo-500" size={20} />
+                Deposit Reward
+              </h2>
+
+              {userBalance !== undefined && (
+                <div className="mb-4 p-3 bg-indigo-500/10 rounded-lg">
+                  <span className="text-sm text-indigo-400">
+                    Current Balance:{" "}
+                  </span>
+                  <span className="font-medium">
+                    {formatEther(userBalance as bigint)} ETH
+                  </span>
+                </div>
+              )}
+
+              <div className="gap-4 mb-4">
+                <div>
+                  <label className="block mb-2 text-sm font-medium">
+                    Amount (ETH)
+                  </label>
+                  <input
+                    type="number"
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(e.target.value)}
+                    placeholder="0.01"
+                    step="0.01"
+                    min="0"
+                    className={`w-full p-3 rounded-lg ${
+                      isDarkMode
+                        ? "bg-gray-800/50 border-gray-700"
+                        : "bg-white border-gray-300"
+                    } border`}
+                  />
+                </div>
+              </div>
+
+              {hash && (
+                <div className="mt-4 p-3 bg-blue-500/10 rounded-lg">
+                  <span className="text-sm text-blue-400">
+                    Transaction Hash:{" "}
+                  </span>
+                  <span className="font-mono text-xs break-all">{hash}</span>
+                </div>
+              )}
+
+              {isConfirmed && (
+                <div className="mt-4 p-3 bg-green-500/10 rounded-lg text-green-400">
+                  <Icons.CheckCircle className="inline-block mr-2" size={16} />
+                  Deposit successful!
+                </div>
+              )}
             </div>
 
             <button
