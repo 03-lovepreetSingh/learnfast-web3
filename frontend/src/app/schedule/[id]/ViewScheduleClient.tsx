@@ -310,11 +310,11 @@ export default function ViewScheduleClient({
     };
   }, []);
 
-  useEffect(() => {
-    if (calculateProgress() === 100) {
-      write?.();
-    }
-  });
+  // useEffect(() => {
+  //   if (calculateProgress() === 100) {
+  //     write?.();
+  //   }
+  // });
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login");
