@@ -53,7 +53,7 @@ interface User {
 }
 
 export default function Dashboard() {
-  const contract = "0x5311cc38317DeBd3cc0e30dfd67c933a53828737";
+  const contract = "0xfC6b4044F776F8E0261b30118D1A63bE2EF01760";
   const router = useRouter();
   const { user, logout, isAuthenticated } = useAuth();
   const [playlistUrl, setPlaylistUrl] = useState("");
@@ -67,7 +67,7 @@ export default function Dashboard() {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [scheduleToDelete, setScheduleToDelete] = useState<string | null>(null);
-  const [monadReward, setMonadReward] = useState<string>("");
+  const [flowReward, setflowReward] = useState<string>("");
 
   // Deposit related states
   const [depositAmount, setDepositAmount] = useState<string>("");
@@ -372,12 +372,12 @@ export default function Dashboard() {
 
             <div>
               <label className="block mb-2 text-sm font-medium">
-                Reward Amount (ETH)
+                Reward Amount (Flow)
               </label>
               <input
                 type="number"
-                value={monadReward}
-                onChange={(e) => setMonadReward(e.target.value)}
+                value={flowReward}
+                onChange={(e) => setflowReward(e.target.value)}
                 placeholder="0.01"
                 step="0.01"
                 min="0"
@@ -408,7 +408,7 @@ export default function Dashboard() {
                     Current Balance:{" "}
                   </span>
                   <span className="font-medium">
-                    {formatEther(userBalance as bigint)} ETH
+                    {formatEther(userBalance as bigint)} 
                   </span>
                 </div>
               )}
@@ -416,7 +416,7 @@ export default function Dashboard() {
               <div className="gap-4 mb-4">
                 <div>
                   <label className="block mb-2 text-sm font-medium">
-                    Amount (ETH)
+                    Amount (FLow)
                   </label>
                   <input
                     type="number"

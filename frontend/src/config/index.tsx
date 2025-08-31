@@ -1,6 +1,6 @@
 import { cookieStorage, createStorage } from "@wagmi/core";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet, arbitrum, monadTestnet } from "@reown/appkit/networks";
+import {flowTestnet, mainnet } from "@reown/appkit/networks";
 
 // Custom Network (Mumbai example)
 
@@ -11,7 +11,7 @@ if (!projectId) {
 }
 
 // Add your networks here
-export const networks = [mainnet, arbitrum, monadTestnet];
+export const networks = [flowTestnet,mainnet];
 
 // Set up Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({

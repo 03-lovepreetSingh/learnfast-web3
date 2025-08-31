@@ -926,7 +926,7 @@ export default function ViewScheduleClient({
   );
 }
 
-const contract = "0x5311cc38317DeBd3cc0e30dfd67c933a53828737";
+const contract = "0xfC6b4044F776F8E0261b30118D1A63bE2EF01760";
 const contractABI = [
   {
     inputs: [
