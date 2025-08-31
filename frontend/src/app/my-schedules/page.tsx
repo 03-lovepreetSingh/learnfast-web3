@@ -283,7 +283,7 @@ export default function MySchedules() {
               </button>
               <appkit-button />
               <button
-                nClick={() => setIsDarkMode(!isDarkMode)}
+                onClick={() => setIsDarkMode(!isDarkMode)}
                 className="p-2 hover:bg-gray-700/50 rounded-full"
                 title={isDarkMode ? "Light Mode" : "Dark Mode"}
               >
