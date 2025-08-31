@@ -181,11 +181,11 @@ export default function ViewScheduleClient({
 
   // Get the write function
 
-  const { write } = useContractWrite({
-    address: contract,
-    abi: contractABI,
-    functionName: "withdraw",
-  });
+  // const { write } = useContractWrite({
+  //   address: contract,
+  //   abi: contractABI,
+  //   functionName: "withdraw",
+  // });
 
   // Utility Functions
   const addToast = (
