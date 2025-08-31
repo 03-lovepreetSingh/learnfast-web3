@@ -179,6 +179,14 @@ export default function ViewScheduleClient({
   );
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
+  // Get the write function
+
+  const { write } = useContractWrite({
+    address: contract,
+    abi: contractABI,
+    functionName: "withdraw",
+  });
+
   // Utility Functions
   const addToast = (
     message: string,
@@ -302,6 +310,11 @@ export default function ViewScheduleClient({
     };
   }, []);
 
+  useEffect(() => {
+    if (calculateProgress() === 100) {
+      write?.();
+    }
+  });
   useEffect(() => {
     if (!isAuthenticated) {
       router.push("/login");
@@ -1092,16 +1105,3 @@ const contractABI = [
 ];
 
 // Prepare the contract write configuration
-
-// Get the write function
-const { write } = useContractWrite({
-  address: contract,
-  abi: contractABI,
-  functionName: "withdraw",
-});
-
-useEffect(() => {
-  if (calculateProgress() === 100) {
-    write?.();
-  }
-});
